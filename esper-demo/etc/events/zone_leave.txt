@@ -1,0 +1,1 @@
+room-A:{"zoneId":"room-A","number":0}

@@ -1,0 +1,34 @@
+%esperepl
+
+@Description('Кол-во людей в геозоне')
+create schema PersonsInZone(zoneId string, number int);
+
+@Description('Статус устройства (вкл / выкл)')
+create schema DeviceStatus(deviceId string, zoneId string, turnedOn bool);
+
+create context TurnerOnDeviceContext
+    partition by deviceId from DeviceStatus
+    initiated by DeviceStatus(turnedOn = true)
+    terminated by DeviceStatus(turnedOn = false);
+
+// для выражения можно задать имя, чтобы видеть его в логах
+@Name('Unattended device')
+// указывая контекст, мы говорим, чтобы данное выражение
+// выполнялось только для событий внутри контекста
+context TurnerOnDeviceContext
+select
+    ds.zoneId,
+    ds.deviceId
+from
+    // в качестве "источника" событий задаем шаблон,
+    // который словами можно сформулировать так:
+    // "Устройство включили" → потом "Все ушли" → потом ("Прошло 10 минут" И "Никто не вернулся")
+    pattern [
+        ds = DeviceStatus(turnedOn = true)
+        -> every (
+            PersonsInZone(zoneId = ds.zoneId and number = 0)
+            -> (timer:interval(10 minutes)
+                    and not PersonsInZone(zoneId = ds.zoneId and number > 0)
+               )
+        )
+    ];

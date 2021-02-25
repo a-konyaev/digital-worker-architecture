@@ -1,0 +1,28 @@
+%esperscenario
+
+t = "2020-12-10 12:00:00.000"
+
+// сотрудник вошел в помещение А
+PersonsInZone = {zoneId="room-A", number=1}
+
+// через 1 минуту включил генератор 1
+t = t.plus(1 minute)
+DeviceStatus = {deviceId="generator-1", zoneId="room-A", turnedOn=true}
+
+// через 30 минут вышел, не выключив генератор
+t = t.plus(30 minutes)
+PersonsInZone = {zoneId="room-A", number=0}
+
+// но через 5 минут вернулся
+t = t.plus(5 minute)
+PersonsInZone = {zoneId="room-A", number=1}
+
+// прошло еще 5 минут - тревоги не должно быть, сотрудник ведь вернулся
+t = t.plus(5 minute)
+
+// еще через 3 часа ушел, а генератор все также остался включенным
+t = t.plus(3 hour)
+PersonsInZone = {zoneId="room-A", number=0}
+
+// через 10 минут - тревога!
+t = t.plus(10 minute)

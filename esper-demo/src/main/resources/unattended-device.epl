@@ -1,0 +1,35 @@
+@Name('Turned ON device context')
+create context TurnerOnDeviceContext
+    partition by deviceId from DeviceStatusEvent
+    initiated by DeviceStatusEvent(turnedOn = true)
+    terminated by DeviceStatusEvent(turnedOn = false);
+
+// для выражения можно задать имя, чтобы видеть его в логах
+@Name('Unattended device')
+// эта аннотация говорит Esper-у, что результат выражения нужно отправить в топик кафки
+@KafkaOutputDefault
+// указывая контекст мы говорим, чтобы данное выражение
+// выполнялось только для событий внутри контекста
+context TurnerOnDeviceContext
+select
+    // createUnattendedDeviceNotification - это наш java-метод,
+    // который создает событие NotificationEvent
+    // а transpose - встроенная функция Esper-а, которую нужно использовать
+    // в случае, если результатом select-а является java-объект
+    transpose(createUnattendedDeviceNotification(
+        ds.deviceId,
+        ds.zoneId
+    ))
+from
+    // в качестве "источника" событий задаем шаблон,
+    // который словами можно сформулировать так:
+    // "Устройство включили" → потом "Все ушли" → потом ("Прошло 10 минут" И "Никто не вернулся")
+    pattern [
+        ds = DeviceStatusEvent(turnedOn = true)
+        -> every (
+            PersonsInZoneEvent(zoneId = ds.zoneId and number = 0)
+            -> (timer:interval(10 seconds)
+                    and not PersonsInZoneEvent(zoneId = ds.zoneId and number > 0)
+               )
+        )
+    ];

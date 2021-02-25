@@ -1,0 +1,18 @@
+%esperscenario
+
+// задаем начальное время
+t = "2020-12-10 12:00:00.000"
+
+// публикуем событие "в помещение A вошел 1 сотрудник"
+PersonsInZone = {zoneId="room-A", number=1}
+
+// через 1 минуту включаем генератор 1 в помещении А
+t = t.plus(1 minute)
+DeviceStatus = {deviceId="generator-1", zoneId="room-A", turnedOn=true}
+
+// через 4 часа сотрудник вышел из помещения А, не выключив генератор
+t = t.plus(4 hours)
+PersonsInZone = {zoneId="room-A", number=0}
+
+// прошло ещё 10 минут - и должно сработать наше правило!
+t = t.plus(10 minute)

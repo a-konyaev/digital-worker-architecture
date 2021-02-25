@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.12">
+<title>Оцифровка рабочего в режиме реального времени</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+/* Uncomment @import statement to use as custom stylesheet */
+/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";*/
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}
+audio,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+a{background:none}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+abbr[title]{border-bottom:1px dotted}
+b,strong{font-weight:bold}
+dfn{font-style:italic}
+hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,*::before,*::after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto;tab-size:4;word-wrap:anywhere;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:0}
+p{font-family:inherit;font-weight:400;font-size:1em;line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em;height:0}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{font-size:1em;line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0;font-size:1em}
+ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
+ul.square{list-style-type:square}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+abbr,acronym{text-transform:uppercase;font-size:90%;color:rgba(0,0,0,.8);border-bottom:1px dotted #ddd;cursor:help}
+abbr{text-transform:none}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote cite{display:block;font-size:.9375em;color:rgba(0,0,0,.6)}
+blockquote cite::before{content:"\2014 \0020"}
+blockquote cite a,blockquote cite a:visited{color:rgba(0,0,0,.6)}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:solid 1px #dedede;word-wrap:normal}
+table thead,table tfoot{background:#f7f8f7}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt{background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
+.clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
+.clearfix::after,.float-group::after{clear:both}
+:not(pre).nobreak{word-wrap:normal}
+:not(pre).nowrap{white-space:nowrap}
+:not(pre).pre-wrap{white-space:pre-wrap}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
+pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
+pre>code{display:block}
+pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
+b.button::before{content:"[";padding:0 3px 0 2px}
+b.button::after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin-left:auto;margin-right:auto;margin-top:0;margin-bottom:0;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
+#header::after,#content::after,#footnotes::after,#footer::after{clear:both}
+#content{margin-top:1.25em}
+#content::before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:-ms-flexbox;display:-webkit-flex;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span::before{content:"\00a0\2013\00a0"}
+#header .details br+span.author::before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark::before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber::after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #dddddf;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #e7e7e9;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
+@media screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:none;background:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:rgba(255,255,255,.8);line-height:1.44}
+#content{margin-bottom:.625em}
+.sect1{padding-bottom:.625em}
+@media screen and (min-width:768px){#content{margin-bottom:1.25em}
+.sect1{padding-bottom:1.25em}}
+.sect1:last-child{padding-bottom:0}
+.sect1+.sect1{border-top:1px solid #e7e7e9}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor::before,h2>a.anchor::before,h3>a.anchor::before,#toctitle>a.anchor::before,.sidebarblock>.content>.title>a.anchor::before,h4>a.anchor::before,h5>a.anchor::before,h6>a.anchor::before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+details>summary:first-of-type{cursor:pointer;display:list-item;outline:none;margin-bottom:.75em}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
+.paragraph.lead>p,#preamble>.sectionbody>[class="paragraph"]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
+table.tableblock #preamble>.sectionbody>[class="paragraph"]:first-of-type p{font-size:inherit}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border-style:solid;border-width:1px;border-color:#e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;-webkit-border-radius:4px;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border-style:solid;border-width:1px;border-color:#dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;-webkit-border-radius:4px;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock>.content>pre{-webkit-border-radius:4px;border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
+@media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
+@media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class="highlight"],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
+.literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
+.listingblock:hover code[data-lang]::before{display:block}
+.listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
+.listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;-webkit-border-radius:4px;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.prettyprint{background:#f7f7f8}
+pre.prettyprint .linenums{line-height:1.45;margin-left:2em}
+pre.prettyprint li{background:none;list-style-type:inherit;padding-left:0}
+pre.prettyprint li code[data-lang]::before{opacity:1}
+pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
+table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
+table.linenotable td.code{padding-left:.75em}
+table.linenotable td.linenos{border-right:1px solid currentColor;opacity:.35;padding-right:.5em}
+pre.pygments .lineno{border-right:1px solid currentColor;opacity:.35;display:inline-block;margin-right:.75em}
+pre.pygments .lineno::before{content:"";margin-right:-.125em}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote::before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
+.verseblock{margin:0 1em 1.25em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract blockquote::before,.quoteblock.excerpt blockquote::before,.quoteblock .quoteblock blockquote::before{display:none}
+.quoteblock.abstract blockquote,.quoteblock.abstract p,.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{line-height:1.6;word-spacing:0}
+.quoteblock.abstract{margin:0 1em 1.25em;display:block}
+.quoteblock.abstract>.title{margin:0 0 .375em;font-size:1.15em;text-align:center}
+.quoteblock.excerpt>blockquote,.quoteblock .quoteblock{padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
+.quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
+.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;text-align:left;margin-right:0}
+p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content{margin-bottom:1.25em;word-wrap:anywhere}
+td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>*>tr>*{border-width:1px}
+table.grid-cols>*>tr>*{border-width:0 1px}
+table.grid-rows>*>tr>*{border-width:1px 0}
+table.frame-all{border-width:1px}
+table.frame-ends{border-width:1px 0}
+table.frame-sides{border-width:0 1px}
+table.frame-none>colgroup+*>:first-child>*,table.frame-sides>colgroup+*>:first-child>*{border-top-width:0}
+table.frame-none>:last-child>:last-child>*,table.frame-sides>:last-child>:last-child>*{border-bottom-width:0}
+table.frame-none>*>tr>:first-child,table.frame-ends>*>tr>:first-child{border-left-width:0}
+table.frame-none>*>tr>:last-child,table.frame-ends>*>tr>:last-child{border-right-width:0}
+table.stripes-all tr,table.stripes-odd tr:nth-of-type(odd),table.stripes-even tr:nth-of-type(even),table.stripes-hover tr:hover{background:#f8f8f7}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+ul.checklist{margin-left:.625em}
+ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist li>p:first-child>input[type="checkbox"]:first-child{margin-right:.25em}
+ul.inline{display:-ms-flexbox;display:-webkit-box;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+ul.inline>li{margin-left:1.25em}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+td.hdlist2{word-wrap:anywhere}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
+.colist td:not([class]):first-child img{max-width:none}
+.colist td:not([class]):last-child{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:solid 4px #fff;-webkit-box-shadow:0 0 0 1px #ddd;box-shadow:0 0 0 1px #ddd}
+.imageblock.left{margin:.25em .625em 1.25em 0}
+.imageblock.right{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+.gist .file-data>table{border:0;background:#fff;width:100%;margin-bottom:0}
+.gist .file-data>table td.line-data{width:99%}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background:#00fafa}
+.black{color:#000}
+.black-background{background:#000}
+.blue{color:#0000bf}
+.blue-background{background:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background:#fa00fa}
+.gray{color:#606060}
+.gray-background{background:#7d7d7d}
+.green{color:#006000}
+.green-background{background:#007d00}
+.lime{color:#00bf00}
+.lime-background{background:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background:#7d0000}
+.navy{color:#000060}
+.navy-background{background:#00007d}
+.olive{color:#606000}
+.olive-background{background:#7d7d00}
+.purple{color:#600060}
+.purple-background{background:#7d007d}
+.red{color:#bf0000}
+.red-background{background:#fa0000}
+.silver{color:#909090}
+.silver-background{background:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background:#fafa00}
+span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note::before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip::before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);-webkit-border-radius:50%;border-radius:50%;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]::after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,span.alt{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;-webkit-box-shadow:0 1px 4px #e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@page{margin:1.25cm .75cm}
+@media print{*{-webkit-box-shadow:none!important;box-shadow:none!important;text-shadow:none!important}
+html{font-size:80%}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]::after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#header,#content,#footnotes,#footer{max-width:none}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span::before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]::before{display:block}
+#footer{padding:0 .9375em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+@media print,amzn-kf8{#header>h1:first-child{margin-top:1.25rem}
+.sect1{padding:0!important}
+.sect1+.sect1{border:0}
+#footer{background:none}
+#footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
+@media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
+</style>
+<link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.css">
+<link rel="stylesheet" href="highlight/styles/github.min.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Оцифровка рабочего в режиме реального времени</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Содержание</div>
+<ul class="sectlevel1">
+<li><a href="#_архитектура">1. Архитектура</a></li>
+<li><a href="#_адаптеры">2. Адаптеры</a></li>
+<li><a href="#_топики_kafka">3. Топики Kafka</a></li>
+<li><a href="#_транслятор">4. Транслятор</a>
+<ul class="sectlevel2">
+<li><a href="#_кэширование_при_потоковой_обработке">4.1. Кэширование при потоковой обработке</a></li>
+</ul>
+</li>
+<li><a href="#_отображение_объектов_на_карте">5. Отображение объектов на карте</a></li>
+<li><a href="#_complex_event_processing">6. Complex Event Processing</a>
+<ul class="sectlevel2">
+<li><a href="#_cep_процессор">6.1. CEP-процессор</a></li>
+<li><a href="#_пример_реализации_правила_на_esper_е">6.2. Пример реализации правила на Esper-е</a></li>
+<li><a href="#_регистрация_внештатных_ситуаций">6.3. Регистрация внештатных ситуаций</a></li>
+</ul>
+</li>
+<li><a href="#_аналитика">7. Аналитика</a>
+<ul class="sectlevel2">
+<li><a href="#_clickhouse">7.1. ClickHouse</a></li>
+<li><a href="#_подготовка_данных">7.2. Подготовка данных</a></li>
+<li><a href="#_формирование_отчетов">7.3. Формирование отчетов</a></li>
+</ul>
+</li>
+<li><a href="#_потоки_событий_и_воспроизведение_истории">8. Потоки событий и воспроизведение истории</a></li>
+<li><a href="#_а_что_у_вас">9. А что у вас?</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Привет, Хабр! Я Алексей Коняев, ведущий разработчик в КРОК.</p>
+</div>
+<div class="paragraph">
+<p>Последние пару лет участвую в проекте "Цифровой рабочий" в роли ведущего java-разработчика.
+Если в двух словах, то это система, которая позволяет предотвращать внештатные ситуации на производстве
+благодаря определению местоположения людей с помощью носимых устройств Outdoor/Indoor-навигации,
+т.е. когда навигация и на улице, и внутри зданий.</p>
+</div>
+<div class="paragraph">
+<p>Представьте, что вы приехали на экскурсию на завод. Там огромная территория и
+вы вместе с гидом передвигаетесь на машине, он рассказывает: "посмотрите направо, здесь новое здание литейного цеха,
+а вот слева старое здание, которое скоро должны снести&#8230;&#8203;". Как вдруг через минуту это старое здание взрывают!
+Гид, конечно, в шоке, да и вы тоже, но, к счастью, все обошлось:) Спрашивается,
+какого черта машина с экскурсантами оказалась в месте проведения взрывных работ?!
+И наша система на этот вопрос тоже не ответит, но она поможет вовремя предупредить всех заинтересованных
+лиц о том, что в геозоне, где сейчас проводятся опасные работы, появились посторонние.</p>
+</div>
+<div class="paragraph">
+<p>Еще пример: сотрудник залез на стремянку, чтобы затянуть вентиль газовой трубы.
+Резьба вдруг сорвалась, сотрудник не удержался и, упав с высоты 5 метров, от удара потерял сознание.
+А вентиль при этом открылся и газ начал поступать в помещение.
+Но датчики падения и удара, которые встроны в носимое устройство, передали сигналы на сервер.
+Там эти два сигнала были обработаны и алгоритм выявления внештатных ситуаций сформировал
+событие-тревогу, которое было передано оператору, а также другим сотрудникам,
+которые находятся недалеко от пострадавшего и могут быстро прийти ему на помощь.</p>
+</div>
+<div class="paragraph">
+<p>Также "Цифровой рабочий" позволяет строить различную аналитику, в том числе realtime, и выполнять "разбор полетов",
+т.е. воспроизводить историю событий, чтобы можно было выяснить, что привело к нежелательной ситуации
+и постараться избежать ее в будущем.</p>
+</div>
+<div class="paragraph">
+<p>Как устроена архитектура нашей системы и как мы используем Kafka, Esper и ClickHouse я расскажу под катом.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images-habr/digital_worker.png" alt="digital worker" width=""">
+</div>
+<div class="title">Пользовательский интерфейс "Цифрового рабочего</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_архитектура">1. Архитектура</h2>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="images-habr/architecture_0.jpg" alt="architecture 0">
+</div>
+<div class="title">Архитектура "Цифрового рабочего"</div>
+</div>
+<div class="paragraph">
+<p>Когда мы только начинали проектировать "Цифровой рабочий", то решили пойти по пути
+<a href="https://ru.wikipedia.org/wiki/%D0%A1%D0%BE%D0%B1%D1%8B%D1%82%D0%B8%D0%B9%D0%BD%D0%BE-%D0%BE%D1%80%D0%B8%D0%B5%D0%BD%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%B0%D1%8F_%D0%B0%D1%80%D1%85%D0%B8%D1%82%D0%B5%D0%BA%D1%82%D1%83%D1%80%D0%B0">Событийно-ориентированной архитектуры</a>.</p>
+</div>
+<div class="paragraph">
+<p>Рассуждали мы так: все начинается с носимых устройств, или, как мы их называем "меток".
+Эти метки, по сути, просто умеют передавать с определенной частотой какую то телеметрию или, другими словами, информацию
+об изменении своего внутреннего состояния. И вот это изменение состояния метки и есть входное для системы событие.
+Далее, нам нужно уметь обрабатывать поток этих входных события, причем, это должен быть не просто последовательный конвейер,
+а параллельная обработка разными модулями, которые в процессе работы будут порождать новые события,
+обрататываемые другими модулями и т.д.
+В итоге, какие то события будут передаваться в UI, чтобы отрисовывать перемещение объектов на карте.</p>
+</div>
+<div class="paragraph">
+<p>В качестве шины или слоя передачи событий мы выбрали <a href="https://kafka.apache.org/">Apache Kafka</a>.
+На тот момент Kafka уже зарекомендовала себя
+как зрелый и надежный продукт (мы начинали с версии 2.0.0). Кроме того, выбирали только среди Open-source решений,
+чтобы удовлетворить требованиям импортозамещения. А с функциональной точки зрения, в Kafkа нам понравилась возможность
+независимо подключать различных консьюмеров к одному и тому же топику,
+возможность прочитать события из топика еще раз за период в прошлом,
+механизм стриминговой обработки Kafka Streams, ну и, конечно, масштабируемость благодаря партиционированию топиков.</p>
+</div>
+<div class="paragraph">
+<p>Архитектура система включает следующие компоненты:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Есть различные носимые устройства (метки) и системы позиционирования, которые уже существуют на рынке и которые умеют
+работать с теми или иными девайсами.</p>
+</li>
+<li>
+<p>Для каждой такой системы позиционирования, с которой мы решили интегрироваться, у нас есть свой модуль <strong>Адаптер</strong>, который
+публикует в kafka события с телеметрией от меток.</p>
+</li>
+<li>
+<p>Далее, эти события обрабатываются <strong>Транслятором</strong>, который выполняет первичную обработку (связывание метки с сотрудником,
+вычисление геозоны, в которой находится сейчас метка и др.).</p>
+</li>
+<li>
+<p>Модуль Complex Event Processing-а (<strong>CEP-процессор</strong>) обрабатывает события, которые порождает Транслятор;
+здесь мы занимаемся выявлением внештатных ситуаций, анализируя различные типы событий, в том числе от разных меток.</p>
+</li>
+<li>
+<p>В <strong>UI</strong> поступают собятия как от Транслятора (для отрисовки перемещения сотрудников), так и от CEP-процессора
+(отображение алертов).</p>
+</li>
+<li>
+<p>Для хранения справочных данных, как то список меток, сотрудников, геозон и пр., используем реляционную БД - <strong>PostgreSQL</strong>.</p>
+</li>
+<li>
+<p>А для хранения данных, по которым строится аналитика - <strong>ClickHouse</strong>.</p>
+</li>
+<li>
+<p>Но в ClickHouse напрямую никто не ходит - для этого используется модуль Reports, который выполняет обработку
+запросов к аналитическим данным (запросы на обновление данных виджетов на аналитической панели в UI,
+запросы на формирование различных отчетов и др.).</p>
+</li>
+<li>
+<p>И еще есть файловое хранилище <strong>S3</strong>, где мы храним файлы 3D-моделей и файлы сформированных отчетов.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Ну а теперь давайте расскажу поподробнее про все модули системы, как они устроены внутри.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_адаптеры">2. Адаптеры</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Основная задача Адаптера - взаимодействие с системой позиционирования через ее API для того, чтобы получать информацию
+о координатах метки и значения встроенных в метку датчиков, например, заряд аккумулятора, статус нажатия тревожной кнопки,
+статус датчика падения и неподвижности, температура, владность, уровень CO2 и др.</p>
+</div>
+<div class="paragraph">
+<p>Системы позиционирования - это не разработка КРОК, а уже существующие на рынке системы, которые, как правило,
+умеют взаимодействовать с одним каким то конкретным девайсом.
+Мы же, подключая через адаптеры такие системы, получаем возможность использовать в "Цифровом рабочем" большой
+ассортимент разных меткок.
+Хотя для некоторых меток мы все таки запилили систему позиционирования сами, когда не удавалось
+найти существующего решения или хотелось поэкспериментировать.
+А один из экспериментов привел к тому, кто КРОК разработал свою метку с креплением на каску:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images-habr/helmet.png" alt="helmet">
+</div>
+<div class="title">Каска с умным модулем КРОК</div>
+</div>
+<div class="paragraph">
+<p>Еще одна важная особенность адаптеров - это сложность с их масштабированием. Когда меток много, то важно успевать
+обрабатывать информацию от всех, и решение в лоб - поставить несколько адаптеров.
+Но сделать это не всегда просто, т.к. мы можем упереться в ограничения API системы позиционирования,
+например, когда адаптер с определенной периодичностью дергает рест-апи и получает статус сразу всех меток.
+Поэтому основное требование к адаптеру - быть <strong>максимально производительным</strong>, т.е. получил данные в чужом формате,
+преобразовал к нашему внутреннему и отправил событие в Kafka. Эти события, которые порождает адаптер, мы назваем <strong>Сырые</strong>.</p>
+</div>
+<div class="paragraph">
+<p>Сырые события бывают такие:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>TagMovement - перемещение метки, содержит координаты;</p>
+</li>
+<li>
+<p>TagInfo - телеметрия со значениями датчиков метки;</p>
+</li>
+<li>
+<p>TagAlert - события нажатия трефожной кнопки, событие падения и удара.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_топики_kafka">3. Топики Kafka</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Отдельно хочу остановиться на топиках.
+Для каждого типа события в "Цифровом рабочем" используется свой отдельный топик.
+Такой подход позволяет:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Индивидуально настраивать retention для каждого топика. Так, например, для сырых событий ретеншн всего 1 сутки, потому
+что эти события практически сразу же будут обработаны и хранить их долго не нужно (но 1 сутки все таки храним на случай
+сбоя).</p>
+</li>
+<li>
+<p>Использовать надстройку над Kafka, которую мы сделали, чтобы модули, которым нужно читать или писать из Kafka,
+могли просто подписываться на события заданного типа, или просто публиковать события, не задумываясь о топике, который
+определяется автоматически.</p>
+</li>
+<li>
+<p>Реализовать автоматическую сборку топологии Kafka Streams процессоров - если вкратце, то работает она так:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>в прикладном модуле нужно объявить процессоры, указав тип "входного" события и тип "выходного";</p>
+</li>
+<li>
+<p>также можно указать, будет ли данный процессор использовать состояние;</p>
+</li>
+<li>
+<p>все процесоры - это Spring Bean-ы;</p>
+</li>
+<li>
+<p>при запуске приложения сборщик топологии находит все процессоры и собирает их в граф, "стыкуя" процесоры так,
+чтобы тип "выхода" одного подходил под тип "входа" другого.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Примерно так выглядит топология процессоров Транслятора, о котором речь пойдет ниже:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images-habr/topology.jpg" alt="topology">
+</div>
+<div class="title">Топология процессоров Транслятора</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_транслятор">4. Транслятор</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Транслятор - это модуль, который выполняет обработку "сырых" событий, поступающих от адаптеров. При этом, какой конкретно
+адаптер был источником события, на этом этапе обработки уже не важно. Все "сырые" события одинаковые.
+Это, кстати, позволило реализовать адаптер-заглушку, который мы используем для отладки и тестирования.
+С его помощью можно управлять перемещением сотрудников клавишами на клавиатуре, чтобы не бегать каждый раз по офису
+с реальной меткой не очень прикольно, хотя с точки зрения физкультуры - это полезно:)</p>
+</div>
+<div class="paragraph">
+<p>Внутри Транслятора несколько процессоров на Kafka Streams
+(см. <a href="https://kafka.apache.org/27/documentation/streams/developer-guide/processor-api.html">processor-api</a>), причем многие из них используют состояние.
+Kafka Streams предоставляет API для работы с состоянием, как с Key-Value таблицей. Тут важно понимать, что для каждого
+ключа входного события процессора существует свое состояние. Ключ у каждого типа события свой, например,
+для события перемещения метки это будет серийный номер метки. Это позволяет выполнять обработку очередного события
+от какой то конкретной метки с учетом истории обработки событий от этой же метки.</p>
+</div>
+<div class="paragraph">
+<p>Транслятор решает следующие задачи:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Вычисление географических координат. Дело в том, что координаты, которые приходят в сырых событиях, могут содержать
+не широту и долготу, а, например, смещение по оси X и Y в метрах, относительно внутренней системы координат
+системы позиционирования. И, помня о том, что Адаптеры должны работать максимально быстро, приведением координат
+к абсолютным или географическим занимается Транслятор.</p>
+</li>
+<li>
+<p>Связывание метки и сотрудника. Здесь процессор Транслятора обращается к реляционной БД за справочной информацией, чтобы
+определить, какой именно сотрудник сейчас носит эту метку.</p>
+</li>
+<li>
+<p>Определение остановки сотрудника. Здесь мы смотрим, если новые координаты метки не сильно отличаются от предыдущих
+в течение некоторого таймаута, то значит сотрудник остановился.</p>
+</li>
+<li>
+<p>Обнаружение потери сигнала от метки. Тут используем такую штуку как Punctuator - это механизм Kafka Streams, который
+позволяет с заданной периодичностью просматривать состояния процессора по всем ключам. И логика простая: если нашли состояние,
+в котором время последних полученных координат позже, чем максимально разрешенное, то значит сигнала от метки не было
+давно и следует считать сигнал потерянным.</p>
+</li>
+<li>
+<p>Еще есть процессоры, которые работают с геозонами. Суть в том, что вся территория и здания размечаются на геозоны.
+Например, "Корпус Альфа", который в свою очередь разделяется на геозоны этажей, а каждый этаж - на корридоры и кабинеты.
+И есть процессор, который определеяет, что координаты метки попали внутрь той или иной геозоны, а другой процессор -
+выполняет подсчет количества сотрудников внутри геозон.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>События, которые создаются в результате работы Транслятора, мы называем бизнес-события, потому что:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>эти события уже представляют интерес для пользователей системы - события перемещения сотрудников передаются в UI
+для отрисовки их на карте; также в UI отображается телеметрия метки, которая уже ассоциирована с определенным сотрудником;</p>
+</li>
+<li>
+<p>почти все бизнес-события сохраняются в аналитическую БД;</p>
+</li>
+<li>
+<p>многие бизнес-события используются для выявления внештатных ситуаций;</p>
+</li>
+<li>
+<p>и еще эти события мы храним в Kafka долго (1 месяц) для того, чтобы иметь возможность воспроизвести их и посмотреть,
+что происходило в определенный интервал времени в прошлом.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_кэширование_при_потоковой_обработке">4.1. Кэширование при потоковой обработке</h3>
+<div class="paragraph">
+<p>Когда мы начали проводить нагрузочное тестирование, то оказалось, что Транслятор сильно тормозит, и связано это было
+с тем, что многие его процессоры при обработке каждого события ходили в БД за справочной информацией.
+Естесственным решением проблемы было кэширование доступа к БД.
+Но кэш нужен был не совсем уж простой, т.к. информация в справочниках хоть и меняется редко, но все равно это может
+произойти в процессе работы. Например, сотрудник потерял метку и ему выдали другую.
+И, кроме того, некоторые процессоры в результате работы могут обновлять какие то данные в БД.
+Поэтому нужен был кэш, который будет:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>обновляться с некоторой периодичностью;</p>
+</li>
+<li>
+<p>периодически "сливать" изменения в БД.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Также нужно было иметь в виду, что Трансляторы мы точно будет запускать в несколько экземпляров, чтобы масштабировать
+на нагрузку. И при этом всем нодам Транслятора должен быть доступен одинаковый кэш. Т.е. запаздание при чтении
+справочников из БД не страшны, но если в ходе обработки сообщений какой то процессор меняет значение в кэше,
+то это новое значение должны быть сразу же доступно всем нодам Транслятора.</p>
+</div>
+<div class="paragraph">
+<p>Мы сделали выбор в пользу <a href="https://hazelcast.com">Hazelcast</a>-а, потому что:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Его достаточно легко использовать - это просто библиотека, которую вы полключаете в проект.</p>
+</li>
+<li>
+<p>Кэши Hazelcast-а автоматически синхронизируются на всех нодах. Но тут нужно быть осторожным - если не ограничить
+"область видимости" кэша через задание имени группы (в конфиге экземпляра Hazelcast-а),
+то он может незаметно для вас реплицироваться в каком-нибудь еще модуле, где вы тоже решили использовать Hazelcast.
+Т.е. в нашем случае, все кэши, которые нужны Трансляторам и только им, объединены в группу "translator".</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>После добавления кэширования производительность Транслятора выросла на несколько порядков!
+Цифры получились такие: одна нода, которой выделены ресурсы, эквивалентные инстансу t4g.micro
+в облаке Amazon EC2 (2CPU + 2Gb), обрабатывала без задержки до 500 входящих "сырых" событий в секунду.
+500 кажется не много, но метки разных производителей передают данные с разной частотой&#8201;&#8212;&#8201;от 3 событий в минуту до 5 событий в секунду. И высокопроизводительные метки, которые дают большую точность,
+могут использоваться не на всей территории объекта. Таким образом, в худшем случае одна нода Транслятора выдерживает
+нагрузку от 100 меток, а в лучшем - от 10 тысяч.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_отображение_объектов_на_карте">5. Отображение объектов на карте</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>UI состоит из двух частей - серверная часть и клиент.
+Серверная часть подписывается на определенные бизнес-события, в первую очередь&#8201;&#8212;&#8201;события перемещения сотрудников.
+Эти события через WebSocket передаются на клиента, но предварительно выполняется:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>фильтрация - каждому клиенту отправляются только те события, которые относятся к текущей выбранной оператором геозоне,
+т.е. если оператор выбрал, например, 7 этаж, то клиент будет получать события только по этому этажу;</p>
+</li>
+<li>
+<p>редукция событий - события накапливаются в буфере и отправляет на клиента 1 раз в секунду.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Это нужно для того, чтобы снизить нагрузку на клиента.</p>
+</div>
+<div class="paragraph">
+<p>Клиентская часть - это web-приложение на React-е. Основную рабочую область UI занимает карта с 3D-моделями зданий,
+которые можно посмотреть "в разрезе" - провалиться на любой этаж и увидеть, что там происходит.
+Для отрисовки 3D-моделей мы используем библиотеку <a href="https://cesium.com/cesiumjs">CesiumJS</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_complex_event_processing">6. Complex Event Processing</h2>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="images-habr/cep.png" alt="cep">
+</div>
+</div>
+<div class="paragraph">
+<p>Термин "Complex Event Processing" (CEP) придумал профессор стендфордского университета
+<a href="https://en.wikipedia.org/wiki/David_Luckham">David Luckham</a>.
+Вкратце, определение звучит так: "Complex Event Processing - это обработка потока различных событий
+в реальном времени с целью выявления паттернов значимых событий".</p>
+</div>
+<div class="paragraph">
+<p>Еще часто CEP сравнивают с ESP (Event Stream Processing). И здесь David Luckham выделяет следующие отличия между ними:</p>
+</div>
+<div class="paragraph">
+<p>ESP&#8201;&#8212;&#8201;это обработка упорядоченного потока события одного типа, которая выполняется, как правило, с целью фильтрации,
+трансформации событий и/или выполнения над потоком событий каких либо математических операций, в том числе, агрегация и
+группировка.</p>
+</div>
+<div class="paragraph">
+<p>CEP&#8201;&#8212;&#8201;это обработка нескольких потоков различных событий, причем, необязательно упорядоченных (т.е. допускается нарушение
+порядка поступления событий в сравнении с порядком их возникновения), которая выполняется внутри некоторого "окна"
+(временного, например) с учетом причинно-следственной связи между различными событиями.</p>
+</div>
+<div class="paragraph">
+<p>Например, обработка событий от термометра с целью управления кондиционером
+(температура стала ниже порога - включили обогрев, и наоборот) - это ESP.
+А вот обработка событий от термометра и одновременно от датчика освещенности в течение суток позволяет сделать вывод,
+что на улице зима.</p>
+</div>
+<div class="paragraph">
+<p>Но, в тоже время, в одной из своих статей David Luckham с коллегой видя, что современные
+инструменты Event Stream Processing-а все больше и больше приобретают возможности CEP-инструментов,
+делают вывод, что со временем разница между ними будет стерта (см.
+<a href="https://complexevents.com/2020/06/17/the-future-of-event-stream-analytics-and-cep">The Future of Event Stream Analytics and CEP</a>).</p>
+</div>
+<div class="sect2">
+<h3 id="_cep_процессор">6.1. CEP-процессор</h3>
+<div class="paragraph">
+<p>Давайте перейдем от теории к практике!
+Как вы уже поняли, в "Цифровом рабочем" именно модуль CEP-процессор выполняет сложную обработку событий, которыми
+в контексте нашей системы являются внештатные ситуации, такие как:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Вход сотрудника в геозону, имеющую в данный момент статус "опасная".</p>
+</li>
+<li>
+<p>Пульс выше или ниже нормы.</p>
+</li>
+<li>
+<p>Срабатывание двух из трех датчиков: падение/удар/неподвижность (заставлять реагировать оператора на единичный сигнал
+падения неправильно, т.к. метка просто могла упасть, но, если в течение небольшого промежутка времени пришло сразу несколько
+таких сигналов, то регистрируется внештатная ситуация).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>В качестве CEP-движка мы используем Open-source библеотеку Esper, которую с 2006 года разрабатывает компания
+<a href="https://www.espertech.com">EsperTech</a>.
+Esper мы выбрали по следующим соображениям:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Описание паттернов сложных событий (или "правил") выполняется на языке Event Processing Language (EPL), который является
+расширением стандарта SQL-92; соответственно, правила описываются в декларативном виде, а нам очень хотелось,
+чтобы эти правила могли понимать не только программисты, но и, например, аналитики (хотя, если правило действительно
+сложное, то без подготовки его будет трудно понять).</p>
+</li>
+<li>
+<p>Esper - мощный инструмент и достаточно сложные паттерны можно описать в несколько строк на EPL.</p>
+</li>
+<li>
+<p>Есть интеграция с Kafka, которая позволяет описывать правила, оперируя событиями, потребляемыми из Kafka, а результат
+работы правила также оформлять в виде события и публиковать в Kafka.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_пример_реализации_правила_на_esper_е">6.2. Пример реализации правила на Esper-е</h3>
+<div class="paragraph">
+<p>Давайте рассмотрим небольшую задачу и ее решение на Esper-е.</p>
+</div>
+<div class="paragraph">
+<p>В КРОКе есть свой ЦОД и газотурбинные генераторы, которые используются как резервный источник питания.
+Эти штуки нужно периодически запускать, но оставлять их включенными без присмотра надолго нельзя.
+Предположим, что сотрудник, который их обслуживает не всегда соблюдает регламент и может отлучиться на время, больше
+чем разрешенное.</p>
+</div>
+<div class="paragraph">
+<p>Задача: если оборудование включено и в помещении, где оно расположено, нет ни одного сотрудника больше 10 минут,
+то необходимо послать сформировать событие-тревогу.</p>
+</div>
+<div class="paragraph">
+<p>Для отладки решения будем использовать <a href="https://www.esperonline.net/">Esper Notebook</a>, в котором можно описать правило
+на EPL-е и сценарий с входными данными.</p>
+</div>
+<div class="paragraph">
+<p>В правиле сначала нужно определить схемы или таблицы, строки которых будут представлять входные события,
+в потоке которых мы будем искать интересующий нас паттерн:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql92 hljs" data-lang="sql92">@Description('Кол-во людей в геозоне')
+create schema PersonsInZone(zoneId string, number int);
+
+@Description('Статус устройства (вкл / выкл)')
+create schema DeviceStatus(deviceId string, zoneId string, turnedOn bool);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Вообще, когда настроена интеграция с Kafka, то определять схемы не обязательно - можно использовать класс события,
+как схему. Но для этого, класс события нужно зарегистрировать при инициализации движка Esper-а:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import com.espertech.esper.client.Configuration;
+import com.espertech.esperio.kafka.EsperIOKafkaConfig;
+import java.util.Properties;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.producer.ProducerConfig;
+
+public class MyEsperConfiguration extends Configuration {
+    public MyEsperConfiguration() {
+        Properties props = new Properties();
+        // параметры для Kafka-консюмера
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "kafka:9092");
+        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+        // параметры для Kafka-продюсера
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "kafka:9092");
+        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+
+        // используем свою реализацию подписчика на топики для того,
+        // чтобы подписаться только на нужные нам топики
+        props.put(EsperIOKafkaConfig.INPUT_SUBSCRIBER_CONFIG, MyEsperIOKafkaInputSubscriber.class.getName());
+        // процессор входных событий - используем реализацию по умолчанию
+        props.put(EsperIOKafkaConfig.INPUT_PROCESSOR_CONFIG, EsperIOKafkaInputProcessorDefault.class.getName());
+
+        // используем свою реализацию контроллера выходного потока событий
+        // (это события, которые будут создаваться при срабатывании правила),
+        // чтобы явно задавать топик, в который нужно опубликовать выходное событие
+        props.put(EsperIOKafkaConfig.OUTPUT_FLOWCONTROLLER_CONFIG, MyEsperIOKafkaOutputFlowController.class.getName());
+
+        // регистрируем плагины для интеграции с Kafka
+        addPluginLoader("KafkaInput", EsperIOKafkaInputAdapterPlugin.class.getName(), props, null);
+        addPluginLoader("KafkaOutput", EsperIOKafkaOutputAdapterPlugin.class.getName(), props, null);
+
+        // регистрируем типы событий
+        // в EPL они будут доступны по имени MyEvent.class.getSimpleName()
+        addEventType(PersonsInZone.class);
+        addEventType(DeviceStatus.class);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Далее, нас интересует, что происходит, когда оборудование включено, поэтому определим контекст, который "откроется"
+при включении оборудования, и "закроется" при его выключении, при этом, для каждой единицы оборудования будет свой
+собственный контекст:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql92 hljs" data-lang="sql92">create context TurnerOnDeviceContext
+    partition by deviceId from DeviceStatus
+    initiated by DeviceStatus(turnedOn = true)
+    terminated by DeviceStatus(turnedOn = false);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Контекст - это своего рода "окно", в рамках которого мы будет наблюдать входящие события.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql92 hljs" data-lang="sql92">// для выражения можно задать имя, чтобы видеть его в логах
+@Name('Unattended device')
+// эта аннотация - наша кастомная, ее использует MyEsperIOKafkaOutputFlowController,
+// заданный в конфиге выше, чтобы выбрать нужный топик,
+// в который будет опубликовано выходное событие
+@KafkaOutputTopic(publishTo = 'notification')
+// указывая контекст мы говорим, чтобы данное выражение
+// выполнялось только для событий внутри контекста
+context TurnerOnDeviceContext
+select
+    // createAlertNotification - это наш java-метод,
+    // который создает событие NotificationEvent
+    // а transpose - встроенная функция Esper-а, которую нужно использовать
+    // в случае, если результатом select-а является java-объект
+    transpose(createAlertNotification(
+        ds.zoneId,
+        ds.deviceId
+    ))
+from
+    // в качестве "источника" событий адаем шаблон,
+    // который словами можно сформулировать так:
+    // "Устройство включили" → потом "Все ушли" → потом ("Прошло 10 минут" И "Никто не вернулся")
+    pattern [
+        ds = DeviceStatus(turnedOn = true)
+        -&gt; every (
+            PersonsInZone(zoneId = ds.zoneId and number = 0)
+            -&gt; (timer:interval(10 minutes)
+                    and not PersonsInZone(zoneId = ds.zoneId and number &gt; 0)
+               )
+        )
+    ];</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Здесь еще используется ключевое слово "every", которое нужно для того, чтобы следующая за ним часть шаблона
+продолжала "находиться" даже после того, как один раз целый шаблон уже был найден.
+Например, если сотрудник включил генератор, потом ушел и прошло больше 10 минут - сработает правило и мы пошлем
+нотификацию оператору, тот позвонит сотруднику, отругает его:), и тот вернется.
+Но генератор сотрудник так и не выключит, поработает с ним ещё какое то время и, опять все забыв,
+снова уйдет больше, чем на 10 минут.
+Таким образом, мы получим ситуацию, когда часть шаблона <code>"Все ушли" → ("Прошло 10 минут" И "Никто не вернулся")</code>
+будет найден снова, в то время, как первая часть <code>"Устройство включили"</code> уже была найдена ранее.
+И, чтобы целый шаблон найти еще раз, нужно написать <code>every</code> перед второй его частью.</p>
+</div>
+<div class="paragraph">
+<p>Чтобы Esper Notebook понял, что текст - это правило, в самом начале нужно использовать ключевое слово <code>%esperepl</code>.
+Полный текст правила, который можно запустить в Notebook-е:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql92 hljs" data-lang="sql92">%esperepl
+create schema PersonsInZone(zoneId string, number int);
+create schema DeviceStatus(deviceId string, zoneId string, turnedOn bool);
+
+create context TurnerOnDeviceContext
+    partition by deviceId from DeviceStatus
+    initiated by DeviceStatus(turnedOn = true)
+    terminated by DeviceStatus(turnedOn = false);
+
+@Name('Unattended device')
+context TurnerOnDeviceContext
+select
+    ds.zoneId, ds.deviceId
+from
+    pattern [
+        ds = DeviceStatus(turnedOn = true)
+        -&gt; every (
+            PersonsInZone(zoneId = ds.zoneId and number = 0)
+            -&gt; (timer:interval(10 minutes)
+                    and not PersonsInZone(zoneId = ds.zoneId and number &gt; 0)
+               )
+        )
+    ];</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Теперь нам нужно протестировать наше правило. Для этого используется сценарий (начинается с ключевого слова <code>%esperscenario</code>),
+в котором можно "публиковать" входные события, увеличивая текущее время сценария:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql92 hljs" data-lang="sql92">%esperscenario
+// задаем начальное время
+t = "2020-12-10 12:00:00.000"
+
+// публикуем событие "в помещение A вошел 1 сотрудник"
+PersonsInZone = {zoneId="room-A", number=1}
+
+// через 1 минуту включаем генератор 1 в помещении А
+t = t.plus(1 minute)
+DeviceStatus = {deviceId="generator-1", zoneId="room-A", turnedOn=true}
+
+// через 4 часа сотрудник вышел из помещения А, не выключив генератор
+t = t.plus(4 hours)
+PersonsInZone = {zoneId="room-A", number=0}
+
+// прошло ещё 10 минут - и должно сработать наше правило!
+t = t.plus(10 minute)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Если в правиле сработает какое то выражение, то в блоке сценария мы должны увидеть его вывод.
+В нашем случае выражение - это select, а вывод будет такой:</p>
+</div>
+<div class="paragraph">
+<p><code>Unattended device-output={ds.zoneId='room-A', ds.deviceId='generator-1'}</code></p>
+</div>
+<div class="paragraph">
+<p>Вот еще один пример сценария посложнее:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql92 hljs" data-lang="sql92">%esperscenario
+t = "2020-12-10 12:00:00.000"
+
+// сотрудник вошел в помещение А
+PersonsInZone = {zoneId="room-A", number=1}
+
+// через 1 минуту включил генератор 1
+t = t.plus(1 minute)
+DeviceStatus = {deviceId="generator-1", zoneId="room-A", turnedOn=true}
+
+// через 30 минут вышел, не выключив генератор
+t = t.plus(30 minutes)
+PersonsInZone = {zoneId="room-A", number=0}
+
+// но через 5 минут вернулся
+t = t.plus(5 minute)
+PersonsInZone = {zoneId="room-A", number=1}
+
+// прошле еще 5 минут - тревоги не должно быть, сотрудник ведь вернулся
+t = t.plus(5 minute)
+
+// еще через 3 часа ушел, а генератор все также остался включенным
+t = t.plus(3 hour)
+PersonsInZone = {zoneId="room-A", number=0}
+
+// через 10 минут - тревога!
+t = t.plus(10 minute)</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_регистрация_внештатных_ситуаций">6.3. Регистрация внештатных ситуаций</h3>
+<div class="paragraph">
+<p>CEP-процессор при срабатывании правил выполняет:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Регистрирует внештатную ситуацию в журнале событий. Мы предполагаем, что события в этот журнал не должны попадать часто,
+но если уж попали, то требуется их явная обработка оператором (написать резолюцию, закрыть событие).</p>
+</li>
+<li>
+<p>Формирует событие-нотификацию, которое, как и все остальные события в "Цифровом рабочем", публикуются
+в свой топик в Kafka. На этот топик подписан модуль <strong>Нотификаций</strong>, который выполняет их маршрутизацию.
+В результате нотификация передается в UI (оператор видит уведомление) или конкретному сотруднику через
+тот канал, который для него определен (например, на почту, в telegram или на метку, которую носит сотрудник,
+если она поддерживает "обратный" канал).</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_аналитика">7. Аналитика</h2>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="images-habr/analitics_dashboard.png" alt="analitics dashboard">
+</div>
+<div class="title">Аналитическая панель</div>
+</div>
+<div class="paragraph">
+<p>Аналитика доступна оператору в виде панели инструментов, на которую он может вынести интересующие его виджеты,
+и в виде механизма формирования отчетов.</p>
+</div>
+<div class="paragraph">
+<p>Виджеты&#8201;&#8212;&#8201;это теже отчеты, у которых есть какие то свои входные параметры, но результат выводится
+не в Excel или PDF-файл, а в виде графика или диаграммы.
+Еще виджеты обновляются раз в 15 секунд, что позволяет оператору видеть актуальные на текущий момент времени данные.</p>
+</div>
+<div class="paragraph">
+<p>Также существуют "отчеты" со специализированным отображением информации непосредственно на карте:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images-habr/analitics_heatmap.png" alt="analitics heatmap">
+</div>
+<div class="title">Тепловая карта: отображает наиболее часто посещаемые места</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images-habr/analitics_route.png" alt="analitics route">
+</div>
+<div class="title">Маршрут: отображает маршрут передвижения сотрудника</div>
+</div>
+<div class="paragraph">
+<p>Данные, по которым строится аналитика, хранятся в БД ClickHouse. Но прежде, чем попасть в ClickHouse, эти данные
+проходят дополнительную обработку в модуле "Подготовки данных". А, чтобы достать эти данные из БД
+и передать потребителю (в данном случае, в UI), используется модуль "Формирования отчетов".</p>
+</div>
+<div class="sect2">
+<h3 id="_clickhouse">7.1. ClickHouse</h3>
+<div class="imageblock">
+<div class="content">
+<img src="images-habr/clickhouse.png" alt="clickhouse">
+</div>
+</div>
+<div class="paragraph">
+<p>К аналитической БД у нас были следующие требования:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>нужно уметь хранить очень много данных&#8201;&#8212;&#8201;наши данные, это события, у которых есть ключ и временная метка;</p>
+</li>
+<li>
+<p>нужно быстро выполнять запросы с условием "С - ПО", т.е. за определенный период времени.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Когда мы выбирали БД, то понимали, что здесь точно нужна не реляционка, а скорее NoSql, которая умеет линейно
+масштабироваться и обеспечивает отказоустойчивость.
+На момент проектирования "Цифрового рабочего" у нас был опыт применения NoSql БД Cassandra, но ClickHouse был на слуху
+и, поизучав документацию и посмотрев несколько презентаций от ребят, которые уже успешно используют его в проде,
+мы тоже решили попробовать.</p>
+</div>
+<div class="paragraph">
+<p>Из особенностей ClickHouse мы для себя выделили следующие:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Это колоночная БД&#8201;&#8212;&#8201;наши события имеют много атрибутов, которые удобно разложить по колонкам.</p>
+</li>
+<li>
+<p>Хорошо подходит для Time-serias данных&#8201;&#8212;&#8201;ClickHouse может партиционировать таблицу по ключу, который является
+функцией от временной метки события, что позволяет хранить в общей партиции все события полученные, например,
+за один и тот же день. А это позволяет эффективно выполнять запросы, у которых задан период времени (сперва будут
+выбраны только нужные партиции, а уже потом только по ним выполняется остальная часть запроса).</p>
+</li>
+<li>
+<p>Есть встроенная интеграция с Kafka&#8201;&#8212;&#8201;ClickHouse напрямую из Kafka умеет загружать данные в таблицы, при этом можно
+дополнительно выполнять обработку данных непосредственно в момент их загрузки.</p>
+</li>
+<li>
+<p>Есть возможность подключить внешнюю реляционную БД&#8201;&#8212;&#8201;мы подключаем справочники, которые храним в PostgreSql, после чего
+их можно использовать как обычные таблицы в Sql-выражениях.</p>
+</li>
+<li>
+<p>Богатый набор встроенных аналитических функций - например, для формирования "Тепловой карты" мы используем функцию
+Квантиль. А еще мне очень нравится работа с массивами в ClickHouse&#8201;&#8212;&#8201;можно джойнить элементы колонки-массива одной
+таблицы со строками другой таблицы или трансформировать строки таблицы в колонку-массив.</p>
+</li>
+<li>
+<p>Масштабируемая и отказоустойчивая&#8201;&#8212;&#8201;чем больше нод базы поднимете, тем больше данных можно будет хранить. Плюс, есть
+встроенный механизм сжатия данных.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Что касается схемы БД, то она устроена примерно так:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Есть таблицы, которые содержат данные в более-менее исходном виде, т.е. в том, в котором поступают события из Kafka.
+Эти таблицы используются для формирования большинства отчетов.</p>
+</li>
+<li>
+<p>Но также есть специализированные таблицы, которые хранят данные в ином виде, удобном для формирования каких то
+конкретных отчетов.</p>
+</li>
+<li>
+<p>И придерживаемся принципа: данные в БД готовим исходя из сценария их использования (какие именно запросы будем
+выполнять к БД и с какими условиями фильтрации).</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_подготовка_данных">7.2. Подготовка данных</h3>
+<div class="paragraph">
+<p>Подготовка данных выполняется, по большому счету, для того, чтобы сделать максимально больше работы заранее, а
+не в тот момент, когда придет запрос в ClickHouse для формирования отчета.</p>
+</div>
+<div class="paragraph">
+<p>Модуль подготовки данных - это Kafka Streams приложение, которое обрабатывает бизнес-событий и выполняет
+следующие действия:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>фильтрация&#8201;&#8212;&#8201;бизнес-событий может быть очень много (например, события перемещения сотрудника),
+а для некоторых отчетов все они не нужны и их можно проредить;</p>
+</li>
+<li>
+<p>денормализация и обогащение&#8201;&#8212;&#8201;чтобы при формировании отчета лишний раз не выполнять join-ы, здесь мы заранее собираем
+все необходимые данные, например, по ИД сотрудника получаем его ФИО и название должностной позиции;</p>
+</li>
+<li>
+<p>форматирование&#8201;&#8212;&#8201;приведение дат к нужному формату, форматирование дробных чисел, локализация текста и т.п.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_формирование_отчетов">7.3. Формирование отчетов</h3>
+<div class="paragraph">
+<p>Для того, чтобы получить отчет, "заказчик" отчета отправляет в топик Kafka <code>report-request</code> событие-запрос.
+Здесь мы отходим от принципа "один тип события - один топик"&#8201;&#8212;&#8201;для каждого конкретного отчета существует свой
+тип события, которое содержит специфичные для данного отчета параметры, но, при этом, все они унаследованы от базового
+класса <code>ReportRequest</code>.</p>
+</div>
+<div class="paragraph">
+<p>Эти ReportRequest-ы обрабатывает модуль формирования отчетов:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>по типу запроса определяется генератор запроса;</p>
+</li>
+<li>
+<p>генератор формирует специфичный для отчета SQL-запрос в ClickHouse, и, при необходимости, выполняет
+дополнительную обработку результата SQL-запроса уже на стороне java-кода;</p>
+</li>
+<li>
+<p>результат работы генератора, если нужно, преобразуется в Excel или Pdf файл, который сохраняется в
+файловое хранилище S3;</p>
+</li>
+<li>
+<p>создается событие-ответ, унаследованное от базового ReportResponse-а, которое содержит данные отчета или
+ссылку на файл в S3.</p>
+</li>
+<li>
+<p>в событие-ответ добавляется инфорация о событии-запросе, чтобы заказчик отчета мог связать ответ
+с ранее отправленным запросов, после чего оно публикуется в топик <code>report-response</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Мы выбрали такую схему формирования отчетов, потому что:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>хотели сделать запрос отчетов асинхронным, чтобы не блокировать заказчика отчета, пока тот формируется (обычно
+отчеты формируются быстро, но если задать очень большой временной интервал, за который нужно получить данные, то
+придется подождать);</p>
+</li>
+<li>
+<p>хотели предоставить возможность формировать отчеты любым клиентам, у которых будет доступ к соответствующим
+топикам Kafka; это могут быть как модули "Цифрового рабочего", так и внешние системы, с которыми мы интегрируемся;</p>
+</li>
+<li>
+<p>использование Kafka автоматически позволяет масштабировать модули формирования&#8201;&#8212;&#8201;просто поднимаем несколько узлов и
+получаем балансировку нагрузки (каждый узел обрабатывает свои партиции топика <code>report-request</code>).</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_потоки_событий_и_воспроизведение_истории">8. Потоки событий и воспроизведение истории</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Если посмотреть на все модули системы вместе, то можно связать их потоками событий,
+которые протекают между ними:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images-habr/flow.jpg" alt="flow">
+</div>
+<div class="title">Потоки событий</div>
+</div>
+<div class="paragraph">
+<p>Потоки событий, которые приходят в UI, используются для отображения перемещения сотрудников, отрисовки статуса геозон,
+вывода предупреждений и другой информации, которая отражает состояние дел в текущий момент времени.
+Но, когда происходит внештатная ситуация, то бывает очень полезно посмотреть, а что происходило в тот момент,
+когда эта ситуация возникла, и за некоторое время до нее.</p>
+</div>
+<div class="paragraph">
+<p>Для этого в "Цифровом рабочем" используется механизм воспроизведения истории, где оператор может задать период времени
+в прошлом и система начнет воспроизводить перемещения сотрудников и прочую информацию,
+как если бы это происходило сейчас. При этом оператор может изменять скорость воспроизведения.</p>
+</div>
+<div class="paragraph">
+<p>Этот механизм реализован следующим образом:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>UI подписывается на нужные ему события с помощью нашего KafkaConsumer-а, который инкапсулирует взаимодействие с Kafka
+и имеет два режима работы: REAL_TIME и PAST_TIME.</p>
+</li>
+<li>
+<p>Если включен режим REAL_TIME, то KafkaConsumer просто передает события, которые в данный момент поступают
+в топики Kafka.</p>
+</li>
+<li>
+<p>А когда включен режим PAST_TIME (при его включении необходимо задать период времени в прошлом), то KafkaConsumer
+вычитывает события из топиков, начиная с offset-а, соответствующего началу периода, и заканчивая offset-ом
+конца периода. При этом KafkaConsumer делает задержки между событиями, чтобы передавать их потребителю с тем же темпом,
+с которым они поступали в реальном времени.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Плюсы этого решения такие:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>для истории не нужно отдельного хранилища&#8201;&#8212;&#8201;вся история хранится в Kafka; при этом retention можно задавать
+большим только для тех топиков, которые нужны для воспроизведения истории;</p>
+</li>
+<li>
+<p>KafkaConsumer с двумя режимами работы обеспечивает прозрачность для потребителя, основная логика которого никак
+не зависит от выбранного режима.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Но есть и минус: в начальный момент времени периода в прошлом мы не можем получить полное состояние системы.
+Предположим, в 12:00 в кабинет вошло 10 сотрудников, а к 13:00 у половины из них сел аккумулятор метки и
+она перестала передавать события со своим местоположением. Тогда, воспроизводя историю с 13:00,
+мы увидем в этом кабинете только 5 сотрудников, у которых метки продолжили работать, т.к. только от этих меток
+в топиках будут события, начиная с 13:00.</p>
+</div>
+<div class="paragraph">
+<p>Я подозреваю, что решить эту проблему только на базе Kafka не получится. Но сейчас текущее решение удовлетворяет нашим
+потребностям, поэтому мы его не трогаем. А как вариант на будущее, можно будет перенести хранение истории в
+ClickHouse, и сделать Consumer, который будет для REAL_TIME-режима ходить в Kafka, а для PAST_TIME&#8201;&#8212;&#8201;в ClickHouse.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_а_что_у_вас">9. А что у вас?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>На этом буду закругляться. Надеюсь, вам было интересно узнать о том,
+как устроен внутри продукт "Цифровой рабочий", который мы разрабатываем в КРОКе.
+Но "Цифровой рабочий", на самом деле, только начинает делать первые шаги на своем пути, и активно развивается.
+Мы постоянно допиливаем новые фичи, интегрируемся с новыми системами позиционирования,
+что-то переделываем и оптимизируем, экспериментируем с другими технологиями потоковой обработки,
+подумываем о том, чтобы прикрутить Machine Learning:) В общем, куча идей и планов на будущее!
+Было бы интересно услышать в комментариях, разрабатываете ли вы что-то подобное, например,
+в области IoT с потоковой обработкой данных, и какие технологии применяете и как?</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2021-02-17 19:16:41 +0300
+</div>
+</div>
+<script src="highlight/highlight.min.js"></script>
+<script>
+if (!hljs.initHighlighting.called) {
+  hljs.initHighlighting.called = true
+  ;[].slice.call(document.querySelectorAll('pre.highlight > code')).forEach(function (el) { hljs.highlightBlock(el) })
+}
+</script>
+</body>
+</html>

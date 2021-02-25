@@ -1,2 +1,2 @@
-# digital-worker-architecture
-Digital worker project architectire article &amp; Esper CEP examples
+# Digital worker architecture
+Digital worker project architecture article & Esper CEP examples

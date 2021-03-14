@@ -46,12 +46,12 @@ public class EsperRunner {
         ExecutionPathDebugLog.setDebugEnabled(true);
         ExecutionPathDebugLog.setTimerDebugEnabled(true);
 
-        // epl из файла
+        // epl from file
         deployEplResource(
                 "unattended-device.epl", getClass().getClassLoader(),
                 runtime, config);
 
-        // epl в виде строки - пример того, как можно аудировать поступающие на вход события
+        // epl as a text: input events audit example
         var auditDeployment = deployEplText(
                 "@Name('Log device status event')\n" +
                         "select logData(e)\n" +
@@ -61,11 +61,9 @@ public class EsperRunner {
                         "from PersonsInZoneEvent e;",
                 runtime, config);
 
-        // т.к. выражения выше - просто селекты, то Esper не будет их выполнять, вернее, не будет
-        // формировать результат селекта, потому что его никто не потребляет,
-        // и результате, не будет вызываться метод logData().
-        // Чтобы все таки метод logData() вызвался,
-        // создадим "потредителя" результата селекта путем добавления Listener-а!
+        // the above statement is just "select" and Esper will not generate output
+        // because it's not being consumed by anyone. Therefore, the logData() method will not be called either.
+        // But we can force it to call it by adding a select output listener:
         Arrays.stream(auditDeployment.getStatements())
                 .forEach(stmt -> stmt.addListener(
                         (newEvents, oldEvents, statement, runtm) -> log.debug("On stmt: {}", statement.getName())));
@@ -80,27 +78,26 @@ public class EsperRunner {
     private static Configuration getConfig() {
         Configuration config = new Configuration();
 
-        // Регистрируем типы событий
-        // в EPL они будут доступны по имени MyEvent.class.getSimpleName()
+        // Register event types.
+        // In EPL they will be accessible by name MyEvent.class.getSimpleName()
         config.getCommon().addEventType(PersonsInZoneEvent.class);
         config.getCommon().addEventType(DeviceStatusEvent.class);
 
-        // Регистрируем плагины для чтения топиков Kafka
+        // Register plugin to consume input events from Kafka topics
         var inputTopics = String.join(",", TopicEventConfig.getInputTopics());
         config.getRuntime().addPluginLoader(
                 EsperIOKafkaInputAdapterPlugin.class.getSimpleName(),
                 EsperIOKafkaInputAdapterPlugin.class.getName(),
                 new Properties() {{
-                    // параметры Kafka-consumer-a
+                    // Kafka consumer parameters
                     put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "kafka:9092");
                     put(ConsumerConfig.GROUP_ID_CONFIG, "esper-demo");
                     put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-                    // чтобы в EPL-правилах можно было использовать имена классов-событий,
-                    // кроме добавление их типов через addEventType, нужно еще правильно их десериализовывать,
-                    // чтобы на выходе из Kafka мы получали типизированное значение события
+                    // so that the names of event classes can be used in EPL rules,
+                    // in addition to adding their types via addEventType,
+                    // we also need to deserialize them correctly
                     put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, EventDeserializer.class.getName());
-                    // перечисляем топики, из которых будем потреблять "входные" для правил события
-                    // и используем готовые реализации подписчика и процессора событий
+                    // list input event's topics
                     put(EsperIOKafkaConfig.TOPICS_CONFIG, inputTopics);
                     put(EsperIOKafkaConfig.INPUT_SUBSCRIBER_CONFIG,
                             EsperIOKafkaInputSubscriberByTopicList.class.getName());
@@ -110,27 +107,26 @@ public class EsperRunner {
                             EsperIOKafkaInputTimestampExtractorConsumerRecord.class.getName());
                 }});
 
-        // Регистрируем плагины для записи в топики Kafka
+        // Register plugin to publish output events to Kafka topics.
         var outputTopics = String.join(",", TopicEventConfig.getOutputTopics());
         config.getRuntime().addPluginLoader(
                 EsperIOKafkaOutputAdapterPlugin.class.getSimpleName(),
                 EsperIOKafkaOutputAdapterPlugin.class.getName(),
                 new Properties() {{
-                    // параметры Kafka-producer-a
                     put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "kafka:9092");
                     put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
                     put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-                    // перечисляем топики, в которые будем публиковать "выходные" события
                     put(EsperIOKafkaConfig.TOPICS_CONFIG, outputTopics);
                     put(EsperIOKafkaConfig.OUTPUT_FLOWCONTROLLER_CONFIG,
                             EsperIOKafkaOutputFlowControllerByAnnotatedStmt.class.getName());
                 }});
-        // Регистрируем аннотацию, которая указывает, что результат выражения должен быть
-        // опубликован в выходные топики Kafka (топики задаем в TOPICS_CONFIG)
+
+        // Register an annotation that indicates that the result of the expression
+        // should be published in the Kafka output topics (the topics are set in TOPICS_CONFIG).
         config.getCommon().addImport(KafkaOutputDefault.class);
 
-        // Регистрируем функции, которые можно будет использовать внутри epl-выражений
-        // Функциями должны быть public static методы
+        // Register functions that can be used inside EPL expressions.
+        // Functions must be public static methods.
         registerSingleRowFunctions(PluginFunctions.class, config);
 
         return config;

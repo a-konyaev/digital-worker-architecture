@@ -29,7 +29,7 @@
     </properties>
 
     <dependencies>
-        <!--  Esper -->
+        <!-- Esper -->
         <dependency>
             <groupId>com.espertech</groupId>
             <artifactId>esper-common</artifactId>
@@ -76,25 +76,6 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>${apache.commons-io.version}</version>
-        </dependency>
-        <!-- Test dependencies -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>${assertj.core.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.approvaltests</groupId>
-            <artifactId>approvaltests</artifactId>
-            <version>${approvaltests.version}</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 
